@@ -1,7 +1,9 @@
-const sequelize = require("sequelize");
-const configDB = new sequelize("db_bootcamp", "postgres", "yangulo", {
-  host: "localhost",
-  port: 5432,
-  dialect: "postgres",
-});
+const configDB = {
+  DB:"db_bootcamp",
+  USER: "postgres", 
+  PASSWORD:"yangulo", 
+  HOST: "localhost",
+  PORT: 5432,
+  DIALECT: "postgres",
+};
 module.exports = configDB;

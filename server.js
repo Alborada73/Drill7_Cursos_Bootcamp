@@ -1,31 +1,30 @@
-const user = require("./app/models/user.model");
-const bootcamp = require("./app/models/bootcamp.model");
-const userBootcamp = require("./app/models/index");
-const { sequelize } = require("./app/config/db.config");
+const db = require("./app/models");
+const bootcampController = require("./app/controllers/bootcamp.controller");
+const userController = require("./app/controllers/user.controller");
 
-(async () => {
-  try {
-    await user.sync({ force: true });
-    console.log("tabla user creada exitosamente");
-  } catch (error) {
-    console.error("error al crear la tabla:", error);
-  }
-})();
+const run = async () => {
+  const bootcamp1 = await bootcampController.createBootcamp({
+    title: "Introduciendo El Bootcamp De React",
+    cue: 10,
+    description:
+      "React es la librería más usada en JavaScript para el desarrollo de interfaces",
+  });
 
-(async () => {
-  try {
-    await bootcamp.sync({ force: true });
-    console.log("tabla bootcamp creada exitosamente");
-  } catch (error) {
-    console.error("error al crear la tabla:", error);
-  }
-})();
+  const user1 = await userController.createUser({
+    firstName: "Mateo",
+    lastName: "Díaz",
+    email: "mateo.diaz@correo.com",
+  });
+};
 
-(async () => {
-  try {
-    await userBootcamp.sync({ force: true });
-    console.log("tabla userBootcamp creada exitosamente");
-  } catch (error) {
-    console.error("error al crear la tabla:", error);
-  }
-})();
+db.sequelize
+
+  .sync({
+    force: true,
+  })
+
+  .then(() => {
+    console.log("Sincronizando tabla intermedia");
+
+    run();
+  });
