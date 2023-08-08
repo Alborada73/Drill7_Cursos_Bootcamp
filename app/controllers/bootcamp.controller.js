@@ -60,6 +60,28 @@ exports.findById = async (bootcampId) => {
         },
       ],
     });
-    return bootcamp
-  } catch (error) {}
+    return bootcamp;
+  } catch (error) {
+    console.log(`>> Error mientras se encontraba el bootcamp: ${error}`);
+  }
+};
+
+exports.findAll = async () => {
+  try {
+    const bootcamps = await Bootcamp.findAll({
+      include: [
+        {
+          model: User,
+          as: "users",
+          attributes: ["id", "firstName", "lastName"],
+          through: {
+            attributes: [],
+          },
+        },
+      ],
+    });
+    return bootcamps;
+  } catch (error) {
+    console.log(`>> Error buscando los bootcamps: ${error}`);
+  }
 };
